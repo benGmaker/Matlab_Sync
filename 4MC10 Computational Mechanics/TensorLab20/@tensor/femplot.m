@@ -1,4 +1,4 @@
-function varargout=femmesh(x,t,varargin)
+function varargout=femplot(x,t,varargin)
 % FEMPLOT  Make a plot of a mesh. 
 %
 %    FEMPLOT(X,CONN) plots a mesh. The function plots the element in
@@ -62,10 +62,12 @@ function varargout=femmesh(x,t,varargin)
 %    show marker at the nodal positions.
 %  
 %    NODESNUMBERS
-%      {'on'} | 'off'%    display the node numbers
+%      {'on'} | 'off'
+%    display the node numbers
 %
 %    ELEMENTNUMBERS
-%      {'on'} | 'off'%    display the element numbers
+%      {'on'} | 'off'
+%    display the element numbers
 %
 %    COLOR
 %      select a different color for the element edges. By default the
