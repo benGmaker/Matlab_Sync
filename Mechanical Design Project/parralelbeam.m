@@ -41,7 +41,7 @@ classdef parralelbeam
     end
     
     methods
-        function obj = parralelbeam(t1,t2,b,h_tot,margin,d,w_a)
+        function obj = parralelbeam(t1,t2,b,L_A,h_tot,margin,d,w_a)
             obj.t1 = t1;
             obj.t2 = t2;
             obj.b = b;
@@ -49,17 +49,32 @@ classdef parralelbeam
             obj.margin = margin;
             obj.d = d;
             obj.w_a = w_a;
+            obj.L_A = L_A;
         end
         
-        function obj = calc(obj)
+        function obj = compdimension1(obj)
+            %variable b, h_tot, t1, t2
             obj.h = obj.h_tot - 2*obj.t1 - 2*obj.margin;
-            obj.L_A = obj.b - 2*obj.t2;
+            obj.b = obj.L_A + 2*obj.t2;
             obj.i = (1/12) * (obj.h/obj.b)^2 * (obj.t1 / obj.t2)^3;
             obj.S_out = (((obj.L_A*obj.i)/obj.h0) - 1) *obj.S0;
             if obj.S_out > 10
                 obj.isGood = true;
             end
-            
+        end
+        
+        function obj = compdimension2(obj)
+            %variable L_a, h_tot, t1,t2
+                        obj.h = obj.h_tot - 2*obj.t1 - 2*obj.margin;
+            obj.L_A = obj.b - 2*obj.t2;
+            obj.i = (1/12) * (obj.h/obj.b)^2 * (obj.t1 / obj.t2)^3;
+            obj.S_out = (((obj.L_A*obj.i)/obj.h0) - 1) *obj.S0;
+            if obj.S_out > 5
+                obj.isGood = true;
+            end
+        end
+        
+        function obj = calc(obj)
             obj.m = 2 * obj.d *(obj.t2 * obj.h + obj.t1* obj.b) *obj.rho_s + obj.rho_a * obj.L_A * obj.w_a^2;
             obj.Ig = obj.t1^3*obj.d;
             obj.Ir = obj.t2^3*obj.d;
