@@ -1,0 +1,8 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Ben;Gortemaker
+FN: Ben Gortemaker
+EMAIL:b.f.gortemaker@student.tue.nl
+TEL;TYPE=cell:06 83544817
+ADR; TYPE=dom:;;Schouwbroekseweg 31 EIDNHOVEN;EINDHOVEN;5616NV
+END:VCARD

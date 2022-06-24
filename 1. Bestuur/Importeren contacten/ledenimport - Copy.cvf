@@ -1,0 +1,8 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Benno;LULLO
+FN: Benno LULLO
+EMAIL:b.f.gortemaker@student.tue.nl
+TEL;TYPE=cell:06 83544817
+ADR; TYPE=dom:;;bruhweg 31;EINDHOVEN;1234AB
+END:VCARD
