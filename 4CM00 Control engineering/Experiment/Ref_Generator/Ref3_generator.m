@@ -11,14 +11,26 @@
 % Reference.r3g file that can be loaded into the ref3 block
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear;
+%path parameters
+d_turnaround = 2.5; %[rad] turn around distance 
+d_constant_v = 120; %[rad] constant velocity distance
 
-% Set your parameters here
-v_stroke = 8;
-total_t = 4.5;
-p_total = 10;
-vmax = 30;
-amax = 20;
-amin = 5;
+t_constant_v = 5;
+total_t = 6; 
+
+%total travel distance
+p_total = d_constant_v + 2*d_turnaround; %travel constant velocity + turnaround time times 2
+v_stroke = d_constant_v / (t_constant_v); %constant tracking velocity
+
+vmax = v_stroke; %maximal velocity 
+
+t_turnaround = (2 * d_turnaround) / v_stroke; %[s] turn around time
+
+t_constant_v = total_t - t_turnaround;
+
+amin = 2*d_turnaround / t_turnaround^2*1.2;
+amax = amin * 1.5; 
+
 plt = 1;    % If you don't want to plot the profile, set this to 0
 
 %% Reference generation. Do not change unless you know what you're doing
