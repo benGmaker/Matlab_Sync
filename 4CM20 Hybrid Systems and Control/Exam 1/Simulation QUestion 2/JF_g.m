@@ -9,7 +9,6 @@
 % -------------------------------------------------------------------------
 
 function xplus = JF_g(x)
-
     if x(3) == 1 %checking if x(3) i.e. is one
         q = 2; %then it wil be set to 2
     elseif x(3) == 2

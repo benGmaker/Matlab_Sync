@@ -11,7 +11,7 @@ close all
 
 
     % Initial condition
-    x0 = [-1; -5; 2];
+    x0 = [1; 5; 1;];
     
     % Simulation horizon
     % The simulation stops when the end of either TSPAN or JSPAN has been reached
@@ -24,7 +24,7 @@ close all
     rule = 2;
     
     % ode45 solver options
-    RelTol = 1e-6;
+    RelTol = 1e-8;
     MaxStep = 0.1;
     options = odeset('RelTol',RelTol,'MaxStep',MaxStep);
     

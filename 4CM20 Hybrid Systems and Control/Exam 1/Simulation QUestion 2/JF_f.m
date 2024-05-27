@@ -14,7 +14,6 @@ function dx = JF_f(x)
     A2 = [1 10; -100 1];
     
     y = [x(1); x(2)];
-    x(3) = round(x(3),0);
     if x(3) == 1
         dy = A1*y;
     elseif x(3) == 2
@@ -22,6 +21,6 @@ function dx = JF_f(x)
     else
         except('state not found') 
     end
-    dx = [dy; x(3)];
+    dx = [dy; 0];
         
 end
