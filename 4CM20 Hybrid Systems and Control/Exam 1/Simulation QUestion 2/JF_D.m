@@ -27,8 +27,9 @@ function [inside] = JF_D(x)
         if abs(E12*y) > abs(E21*y) && x(3) == 2
             inside = 1; 
             display('edge2')
+
         end
-        
+
     else
         inside = 0;
     end

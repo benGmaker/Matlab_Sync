@@ -14,10 +14,10 @@ function [inside] = JF_C(x)
     y = [x(1); x(2)];
     product = y.'*Q*y;
     
-    if  product >= 0 
+    if  product >= 0
         inside = 1;
     else
         inside = 0;
-        display('outside')
+       
     end
 end
