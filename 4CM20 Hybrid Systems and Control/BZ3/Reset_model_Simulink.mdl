@@ -48,8 +48,8 @@ __MWOPC_PART_BEGIN__ /metadata/coreProperties.xml
   <dcterms:created xsi:type="dcterms:W3CDTF">2015-12-09T14:46:52Z</dcterms:created>
   <dc:creator>niek</dc:creator>
   <cp:lastModifiedBy>bengo</cp:lastModifiedBy>
-  <dcterms:modified xsi:type="dcterms:W3CDTF">2024-05-24T15:06:50Z</dcterms:modified>
-  <cp:revision>17.0</cp:revision>
+  <dcterms:modified xsi:type="dcterms:W3CDTF">2024-05-24T15:09:28Z</dcterms:modified>
+  <cp:revision>17.1</cp:revision>
   <cp:version>R2024a</cp:version>
 </cp:coreProperties>
 
@@ -121,7 +121,7 @@ __MWOPC_PART_BEGIN__ /simulink/blockdiagram.xml
     <ConfigManagerSettings>
       <P Name="ModifiedByFormat">%&lt;Auto&gt;</P>
       <P Name="ModifiedDateFormat">%&lt;Auto&gt;</P>
-      <P Name="ModelVersionFormat">%&lt;AutoIncrement:17.0&gt;</P>
+      <P Name="ModelVersionFormat">%&lt;AutoIncrement:17.1&gt;</P>
     </ConfigManagerSettings>
     <SimulationSettings>
       <P Name="SimulationMode">normal</P>
@@ -1446,7 +1446,7 @@ __MWOPC_PART_BEGIN__ /simulink/stateflow/chart_38.xml
 %--------------------------------------------------------------------------
 % jump map: xplus = g(x,u);
 
-xplus = x;
+xplus = -x;
 
 </P>
         <P Name="fimathString">fimath(...
@@ -3338,7 +3338,7 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
       </Array>
       <P Name="WindowState" Class="char">AAAA/wAAAAD9AAAAAwAAAAAAAADAAAADNvwCAAAABPsAAAAWAEQAbwBjAGsAVwBpAGQAZwBlAHQAMwEAAAAxAAAB+AAAAAAAAAAA+wAAABYARABvAGMAawBXAGkAZABnAGUAdAA0AAAAAAD/////AAAAAAAAAAD7AAAAUgBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQALwBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQAAAAAlwAAAzYAAAB5AP////sAAABgAFMAaQBtAHUAbABpAG4AawA6AEUAZABpAHQAbwByADoAUgBlAGYAZQByAGUAbgBjAGUAZABGAGkAbABlAHMALwBSAGUAZgBlAHIAZQBuAGMAZQBkACAARgBpAGwAZQBzAAAAAAD/////AAAApwD///8AAAABAAAAAAAAAAD8AgAAAAH7AAAAVABHAEwAVQBFADIAOgBQAHIAbwBwAGUAcgB0AHkASQBuAHMAcABlAGMAdABvAHIALwBQAHIAbwBwAGUAcgB0AHkAIABJAG4AcwBwAGUAYwB0AG8AcgAAAAAA/////wAAAhYA////AAAAAwAAAAAAAAAA/AEAAAAB+/////8AAAAAAP////8AAAMWAP///wAAB4AAAAM2AAAAAQAAAAIAAAABAAAAAvwAAAAA</P>
       <Array PropName="PersistedApps" Type="Cell" Dimension="0*1"/>
-      <P Name="WindowUuid" Class="char">2e6a7782-170c-45ae-bec6-6cb5f39ea531</P>
+      <P Name="WindowUuid" Class="char">69f1e7ff-7cd7-4424-98e0-4b337ee93f19</P>
     </Object>
     <P Name="BDUuid" Class="char">7da60639-e7fc-4e6f-9da3-2dbd186cac51</P>
   </Object>
