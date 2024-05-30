@@ -9,21 +9,29 @@ clc
 yalmip clear
 
 % System dynamics:
-A1 = [-0.1 1; -5 -0.1];
-A2 = [-0.1 5; -1 -0.1];
+A1 = [-3 0 -2;
+    0 -5 0;
+    1 0 -1];
+A2 = [-2 0 -3;
+    0 -3 0;
+    3 0 -2];
+A3 = [7 -5 -7;
+    -8 -1 12;
+    8 -4 -9];
 
 % LMI variables:
-Pvar = sdpvar(2,2); % symmetric by default
+Pvar = sdpvar(3,3); % symmetric by default
 
 %% Search for a common quadratic Lyapunov function
 % Lyapunov condition:
 Lf1 = A1'*Pvar+Pvar*A1<=-1e-9;
 Lf2 = A2'*Pvar+Pvar*A2<=-1e-9;
+Lf3 = A3'*Pvar+Pvar*A3<=-1e-9;
 
 Lp = Pvar>=1e-9;
 
 % combine constraints into one object
-L = [Lf1,Lf2,Lp]; 
+L = [Lf1,Lf2,Lf3,Lp]; 
 
 % solve the LMI using SDPT3:
 opts = sdpsettings('solver','sdpt3');
