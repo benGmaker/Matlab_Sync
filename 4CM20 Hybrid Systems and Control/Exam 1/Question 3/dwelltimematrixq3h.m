@@ -26,32 +26,36 @@ close all
 clc
 
 % System matrices
-A = [1 -3;
-    1.5 1];
-R = [0.4 0.3;
-    0 0.6];
+
+A1 = [-3 1.5;
+    0 -2];
+A2 = [1 2;
+      0 3];
 
 
 % LMI variables:
-Pvar = sdpvar(2,2); % symmetric by default
+Pvar = sdpvar(2,2);
+A = A2;
+%P1var = sdpvar(3,3); % symmetric by default
+%P2var = sdpvar(3,3); % symmetric by default
+%P3var = sdpvar(3,3); % symmetric by default
 
 % Parameters
 alpha = 0.01;       % \alpha of exercise
 beta = 100;         % \beta of exercise
-I = eye(2);
+I = eye(3);
 
 % Loop parameters
-lb = 1e-2;             % initial value lower search bound
+lb = 1;             % initial value lower search bound
 ub = 10;            % initial value upper search bound
-dtau = 1e-8;      % maximal difference in sigma between to different iteration steps
+dsigma = 1e-8;      % maximal difference in sigma between to different iteration steps
 ii = 100;           % maximal number of iteration steps
 
 % Set initial loop values
 lbf = NaN;      % lower bound feasible? NaN: not determined yet, 0: no, 1: yes
 ubf = NaN;      % upper bound feasible? NaN: not determined yet, 0: no, 1: yes
 
-
-tau = [];    % search variable 
+sigmal = [];    % list to store sigmas of iteration loop
 
 %% Iteration loop
 
@@ -63,19 +67,19 @@ else
     for i = 1:ii
         % Determine feasibility of upper and lower bound
         if isnan(lbf)
-            tau = lb;      % determine feasibility lower bound
+            sigma = lb;      % determine feasibility lower bound
         elseif isnan(ubf)
-            tau = ub;     % determine feasibility upper bound
+            sigma = ub;     % determine feasibility upper bound
             
             % Expand range if both values are feasibile or not feasible
         elseif lbf == 0 && ubf == 0  	% both values are not feasible
-            tau = lb/2;                    % try lower value, reducing the lower bound by a factor 2
+            sigma = lb/2;                    % try lower value, reducing the lower bound by a factor 2
         elseif lbf == 1 && ubf == 1     % both values are feasible
-            tau = 2*ub;                  % try higher value, by doubling the interval length and keeping the lower bound fixed
+            sigma = 2*ub;                  % try higher value, by doubling the interval length and keeping the lower bound fixed
             
             % Lower bound is feasible, upper bound is not feasible
         else
-            tau = (ub-lb)/2 + lb;      % bisecting the interval
+            sigma = (ub-lb)/2 + lb;      % bisecting the interval
         end
         
         % LMIs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -90,13 +94,14 @@ else
         % LMI problem
         %positive definiteness of P
         Lp = Pvar >= 1e-9;
+       
             % We use Pvar>= 1e-9 instead of Pvar>0, as strict inequalities do not make
         %decrease of the Lyapunv function in flow
-        Lf = A'*Pvar+Pvar*A1<=-sigma*Pvar;
-        Lg = R'*Pvar*R <= e^-d * Pvar;
+        Lf = A1'*Pvar+Pvar*A1<=-sigma*Pvar;
+        Lf2 = A2'*Pvar+Pvar*A2<=-sigma*Pvar;
         
         % combine constraints into one object
-        L = [Lf,Lp]
+        L = [Lf,Lf2,Lp]; 
         opts = sdpsettings('solver','sdpt3');
         diagnostics = optimize(L,[],opts); % solve the LMI problem
         
@@ -114,34 +119,34 @@ else
             % Resuls feasibility check if range is broadened
         elseif sigma > ub
             lb = ub;                % set new lower bound
-            ub = tau;             % set new upper bound
+            ub = sigma;             % set new upper bound
             ubf = min(pres) > 0 && diagnostics.problem == 0;    % determine feasibility upper bound
         elseif sigma < lb
             ub = lb;                % set new upper bound
-            lb = tau;             % set new upper bound
+            lb = sigma;             % set new upper bound
             lbf = min(pres) > 0 && diagnostics.problem == 0;    % determine feasibility lower bound
             
             % Determine feasibility after bisection
         else
             if min(pres) > 0 && diagnostics.problem == 0
-                lb = tau;     % new lower bound
+                lb = sigma;     % new lower bound
             else
-                ub = tau;     % new upper bound
+                ub = sigma;     % new upper bound
             end
             
             % Check convergence criterion?
-            if abs(tau-tau(i-1)) < dtau
+            if abs(sigma-sigmal(i-1)) < dsigma
                 break;              % break loop if accurate enough
             end
         end
         
         % Add sigma to history list
-        tau(i) = tau;
+        sigmal(i) = sigma;
         
         % Store feasible solution
         if min(pres) > 0 && diagnostics.problem == 0
             feasible.Pvar = Pvar;
-            feasible.tau = tau;
+            feasible.sigma = sigma;
         end
         
     end
@@ -156,8 +161,8 @@ else
     axis tight
     
     % Retrieve output
-    P   = value(feasible.Pvar)
-    tau = feasible.tau
+    P    = round(value(feasible.Pvar),4)
+    sigma = feasible.sigma
 end
 
 
