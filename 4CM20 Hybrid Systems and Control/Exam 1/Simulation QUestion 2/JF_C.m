@@ -11,13 +11,13 @@
 
 function [inside] = JF_C(x) 
     Q = [-16,3;3,1];
+    %Q = [-32,6;6,2];
     y = [x(1); x(2)];
-    product = y.'*Q*y;
     
-    if  product >= 0
+    if y'*Q*y >= 0 
         inside = 1;
     else
         inside = 0;
-       
     end
+    
 end
