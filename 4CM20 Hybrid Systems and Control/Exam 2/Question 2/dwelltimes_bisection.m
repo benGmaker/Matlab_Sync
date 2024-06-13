@@ -26,24 +26,25 @@ close all
 clc
 
 % System matrices
-A1 = [1.01 0.06;
-    0.23 0.82];
-A2 = [0.87 -0.32;
-    -0.40 1.44];
+A = [ 4 14 -12;
+    0 -4 0;
+    1.5 -1 -5];
+B = [4; 0; 2];
+J = [-1 1.2 3.4;
+    -0.25 0.9 0.5;
+    -0.85 0.8 2.4];
+M = [0; 1; 1];
+C = [0 1 0];
 
-Q1 = [-6 -8;
-    -8 6];
-Q2 = [4 3;
-    3 -4];
-
-% LMI variables:
-P1var = sdpvar(2,2); % symmetric by default
-P2var = sdpvar(2,2); % symmetric by default
+%LMI variables
+Pvar = sdpvar(3,3); %Lyapunov matrix
+Zvar = sdpvar(3,3); %defining new indepenten matrices
+Qvar = sdpvar(3,3);
 
 % Parameters
 alpha = 0.01;       % \alpha of exercise
 beta = 100;         % \beta of exercise
-I = eye(2);
+I = eye(3);
 
 % Loop parameters
 lb = 0.01;             % initial value lower search bound
@@ -101,8 +102,8 @@ else
         Lf2 = A2'*P2var*A2 - P2var<=-sigma*Q2;
         
         %transition decreasing condition
-        Ct1 = A1'*P1var*A1 + P2var < 0;
-        Ct2 = A2'*P2var*A2 + P1var < 0;
+        Ct1 = A1'*P1var*A1 + P2var <= 0;
+        Ct2 = A2'*P2var*A2 + P1var <= 0;
         % combine constraints into one object
         L = [Lf1,Lf2,Lp1,Lp2,Ct1,Ct2]; 
         opts = sdpsettings('solver','sdpt3');
