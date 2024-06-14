@@ -8,7 +8,7 @@ function [ub, lb, lbf, ubf,dwelltime_cond] = CheckFeasibilityCvar(sigma,ub,lb,lb
         return
     end
     
-    if ub < 0 
+    if ub > 0 
         %cvar is negative, we are searching for maximal dwell time
         dwelltime_cond = dwelltime(L) > dwelltime(L-1); 
     else
