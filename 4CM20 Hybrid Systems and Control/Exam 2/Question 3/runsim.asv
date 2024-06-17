@@ -1,4 +1,4 @@
-clear; close all
+clear; clc;
 
 sim_prob = 0; % disturbance rejection
 %sim_prob = 1; % overshoot
@@ -11,7 +11,7 @@ if sim_prob == 1
 else
     init_cond = [0;0];
     stopTime = 1;
-    amp_d = 1e3;
+    amp_d = 3000;
     Tsample = 1e-4;
     t_off = 0.1;
 end
@@ -34,20 +34,8 @@ out= sim("massPID_variableGain.mdl");
 
 
 %% plot
-f= figure;
+figure;
 plot(out.PID); hold on;
 plot(out.SwitchedPID);
 legend({'PID','Switched PID'})
-title(['Switched PID vs PID'])
-saveas(f,['Gamma = ' int2str(amp_d) '.png'])
-
-x = out.PID;
-d = out.d;
-x_rms = rms(x.Data);
-w_rms = rms(d.Data);
-gamma_PID = x_rms/w_rms
-
-x = out.SwitchedPID;
-x_rms = rms(x.Data);
-w_rms = rms(d.Data);
-gamma_switched = x_rms/w_rms
+title('Gamma = ' int2str(amp_d))
